@@ -1,18 +1,32 @@
 package controller;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
 @RequestScoped
 public class LoginController {
 
-	private String login = "Maria";
+	private String login;
 	private String senha;
 	
-	public void entrar() {
-		System.out.println(login);
-		System.out.println(senha);
+	public String entrar() {
+		if (login.equals("joao") && senha.equals("123")) {
+			return "helloworld.xhtml?faces-redirect=true";
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null, 
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+						"Login ou Senha Invalido", null));
+		return null;
+	}
+	
+	public void limpar () {
+		login = "";
+		senha = "";
+		
 	}
 
 	public String getLogin() {
